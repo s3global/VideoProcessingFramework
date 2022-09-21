@@ -1053,6 +1053,11 @@ void NvEncoderClInterface::SetupH264Config(NV_ENC_CONFIG_H264 &config,
     }
   }
 
+  auto repeat_sps_pps = FindAttribute(options, "repeatspspps");
+  if (!repeat_sps_pps.empty()) {
+    config.repeatSPSPPS = FromString<uint32_t>(repeat_sps_pps);
+  }
+
   config.idrPeriod = parent_params.gop_length;
 
 #if CHECK_API_VERSION(9, 1)
@@ -1145,6 +1150,11 @@ void NvEncoderClInterface::SetupHEVCConfig(NV_ENC_CONFIG_HEVC &config,
     memset(&config, 0, sizeof(config));
 
     config.chromaFormatIDC = 1;
+  }
+
+  auto repeat_sps_pps = FindAttribute(options, "repeatspspps");
+  if (!repeat_sps_pps.empty()) {
+    config.repeatSPSPPS = FromString<uint32_t>(repeat_sps_pps);
   }
 
   config.idrPeriod = parent_params.gop_length;
